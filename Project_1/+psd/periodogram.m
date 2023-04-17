@@ -5,7 +5,8 @@ function [ff,f] = periodogram( data, fs, window, do_plot )
     w = (-pi:(2*pi/NFFT):(pi)-(2*pi/NFFT)).';
 
     % FFT using matlab function for error checking
-    %ff = (fftshift( fft( data .* window(size(data)), NFFT ) ).^2)./NFFT;  
+    %ff = (fftshift( fft( data .* window(size(data)), NFFT ) ).^2)./NFFT;
+    
     ff = zeros( NFFT, 1 );
     for wIdx = 1:NFFT
         ff(wIdx) = (sum( data .* window(size(data)).*exp(-1i.*w.*(wIdx-1))).^2)./NFFT;
