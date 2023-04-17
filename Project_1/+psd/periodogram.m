@@ -3,7 +3,7 @@ function [ff,f] = periodogram( data, fs, window, do_plot )
     %   data: Real or complex column vector of signal data
     %   fs: Sample rate of data in Hz
     %   window: Callable function to generate a window for data. Must take
-    %       two inputs, window(dim1, dim2)
+    %       a signle input, window(dim1)
     %   do_plot: Boolean flag to create plot or not
 
     NFFT = size(data,1);
@@ -15,7 +15,7 @@ function [ff,f] = periodogram( data, fs, window, do_plot )
     
     ff = zeros( NFFT, 1 );
     for wIdx = 1:NFFT
-        ff(wIdx) = (sum( data .* window(size(data)).*exp(-1i.*w.*(wIdx-1))).^2)./NFFT;
+        ff(wIdx) = (sum( data .* window(size(data,1)).*exp(-1i.*w.*(wIdx-1))).^2)./NFFT;
     end
     ff = fftshift( ff );
 
