@@ -17,11 +17,11 @@ function [ff,f] = periodogram( data, fs, window, do_plot )
     for wIdx = 1:NFFT
         ff(wIdx) = (sum( data .* window(size(data,1)).*exp(-1i.*w.*(wIdx-1))).^2)./NFFT;
     end
-    ff = fftshift( ff );
+    ff = abs( fftshift( ff ) );
 
     if( do_plot )
         figure()
-        plot( f, mag2db( abs( ff ) ) );
+        plot( f, mag2db( ff ) );
         xlabel('Freq (Hz)');
         ylabel('dB' );
     end

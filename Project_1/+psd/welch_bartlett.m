@@ -25,11 +25,11 @@ function [ff, f] = welch_bartlett( data, fs, window, NFFT, overlap_stride, do_pl
                             fs, window, false );
         ff = ff + ff_new;                
     end
-    ff = ff./numSegments;
+    ff = abs(ff)./numSegments;
 
     if( do_plot )
         figure()
-        plot( f, mag2db( abs( ff ) ) );
+        plot( f, mag2db( ff ) );
         xlabel('Freq (Hz)');
         ylabel('dB' );
     end
