@@ -7,7 +7,7 @@ function [ff, f] = music( data, fs, window_size, num_signals, do_plot )
     %   num_signals: The number of complex tones present in data
     %   do_plot: Boolean flag to create plot or not
 
-    Rx = helpers.autocorrelation( data, window_size );
+    Rx = helpers.autocorrelation_matrix( data, window_size );
     [ eVec, eVal ] = eig( Rx );
     eVals = diag( eVal );
     [ eVals, eIndex ] = sort( eVals );

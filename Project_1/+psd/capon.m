@@ -6,7 +6,7 @@ function [ff, f] = capon( data, fs, window_size, do_plot )
     %   auto correlation
     %   do_plot: Boolean flag to create plot or not
 
-    Rx = helpers.autocorrelation( data, window_size );
+    Rx = helpers.autocorrelation_matrix( data, window_size );
 
     NFFT = window_size;
     ff = zeros(NFFT,1);
