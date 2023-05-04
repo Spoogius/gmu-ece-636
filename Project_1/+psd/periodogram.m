@@ -11,12 +11,12 @@ function [ff,f] = periodogram( data, fs, window, do_plot )
     w = (-pi:(2*pi/NFFT):(pi)-(2*pi/NFFT)).';
 
     % FFT using matlab function for error checking
-%     ff = ( fft( data .* window(size(data,1)), NFFT ).^2)./NFFT.^2;
+    ff = ( fft( data .* window(size(data,1)), NFFT ).^2)./NFFT;%NFFT.^2;
     
-    ff = zeros( NFFT, 1 );
-    for wIdx = 1:NFFT
-        ff(wIdx) = (sum( data .* window(size(data,1)).*exp(-1i.*w.*(wIdx-1))).^2)./NFFT.^2;
-    end
+%     ff = zeros( NFFT, 1 );
+%     for wIdx = 1:NFFT
+%         ff(wIdx) = (sum( data .* window(size(data,1)).*exp(-1i.*w.*(wIdx-1))).^2)./NFFT.^2;
+%     end
     ff = abs( fftshift( ff ) );
 
     if( do_plot )
