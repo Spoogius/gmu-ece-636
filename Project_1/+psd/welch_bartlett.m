@@ -32,6 +32,7 @@ function [ff, f] = welch_bartlett( data, fs, window, NFFT, overlap_stride, do_pl
         plot( f, mag2db( ff ) );
         xlabel('Freq (Hz)');
         ylabel('dB' );
+        title('Welch-Bartlett');
     end
 
 end

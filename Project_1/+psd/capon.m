@@ -24,6 +24,7 @@ function [ff, f] = capon( data, fs, window_size, do_plot )
         plot( f, mag2db( ff ) );
         xlabel('Freq (Hz)');
         ylabel('dB' );
+        title('Capon');
     end
 
 end

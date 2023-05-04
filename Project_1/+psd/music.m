@@ -28,6 +28,7 @@ function [ff, f] = music( data, fs, window_size, num_signals, do_plot )
         plot( f, mag2db( ff ) );
         xlabel('Freq (Hz)');
         ylabel('dB' );
+        title('Music');
     end
 
 end

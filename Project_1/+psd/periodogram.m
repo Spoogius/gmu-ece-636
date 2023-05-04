@@ -11,7 +11,7 @@ function [ff,f] = periodogram( data, fs, window, do_plot )
     w = (-pi:(2*pi/NFFT):(pi)-(2*pi/NFFT)).';
 
     % FFT using matlab function for error checking
-    %ff = (fftshift( fft( data .* window(size(data)), NFFT ) ).^2)./NFFT.^2;
+%     ff = ( fft( data .* window(size(data,1)), NFFT ).^2)./NFFT.^2;
     
     ff = zeros( NFFT, 1 );
     for wIdx = 1:NFFT
@@ -24,6 +24,7 @@ function [ff,f] = periodogram( data, fs, window, do_plot )
         plot( f, mag2db( ff ) );
         xlabel('Freq (Hz)');
         ylabel('dB' );
+        title('Periodogram');
     end
 
 end
