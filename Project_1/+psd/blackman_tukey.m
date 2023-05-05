@@ -15,7 +15,7 @@ function [ff, f] = blackman_tukey( data, fs, window, do_plot )
 
     if( do_plot )
         figure()
-        plot( f, mag2db( ff./NFFT ) );
+        plot( f, mag2db( ff ) );
         xlabel('Freq (Hz)');
         ylabel('dB' );
         title('Blackman-Tukey');

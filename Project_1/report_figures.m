@@ -127,32 +127,54 @@ ylabel("dB" )
 title("Welch-Bartlett Rectangle Window" )
 ylim([ -10+min( mag2db( ff_wb )), 10+max( mag2db( ff_wb ))]);
 
+
 %% Figure 9
+fs = 100; % Hz
+duration = 20; % Seconds
+[x,t] = gen.cplx_exp( [ 5, 10, -25 ], [0,0,0], [1,1,1], fs, duration);
+x =  x + gen.cwgn( 0, 10, fs*duration, 1);
+psd.blackman_tukey(x, fs, @hanning, true );
+
+
+%% Figure 10
+fs = 100; % Hz
+duration = 20; % Seconds
+[x,t] = gen.cplx_exp( [ 5, 10, -25 ], [0,0,0], [1,1,1], fs, duration);
+x =  x + gen.cwgn( 0, 10, fs*duration, 1);
+[ ff, f ] = psd.capon(x, fs, 44, false );
+subplot( 2,1,1 )
+plot( f, mag2db(ff) );
+xlabel("Frequency (Hz)")
+ylabel("dB" )
+title("Capon Segment Size = 44" )
+
+[ ff, f ] = psd.capon(x, fs, 25, false );
+subplot( 2,1,2 )
+plot( f, mag2db(ff) );
+xlabel("Frequency (Hz)")
+ylabel("dB" )
+title("Capon Segment Size = 25" )
+
+%% Figure 11
+fs = 100; % Hz
+duration = 1000; % Seconds
+[x,t] = gen.cplx_exp( [ 5, 10, -25 ], [0,0,0], [1,1,1], fs, duration);
+x =  x + gen.cwgn( 0, 10, fs*duration, 1);
+[ ff, f ] = psd.capon(x, fs, 100, false );
+
+plot( f, mag2db(ff) );
+xlabel("Frequency (Hz)")
+ylabel("dB" )
+title("Capon Segment Size = 100" )
+
+%% Figure 12
 fs = 100; % Hz
 duration = 2000; % Seconds
 x =  gen.cwgn( 0, 1, fs*duration, 1);
-[ff_p, f_p ] = psd.periodogram(x, fs, @windows.ones, false );
-[ff_wb, f_wb ] = psd.welch_bartlett(x, fs, @windows.ones, 128, 64, false );
-[ff_c, f_c ] = psd.capon(x, fs, 128, false );
+psd.capon(x, fs, 100, true );
+ylim([ -10,10]);
 
-figure()
-subplot( 3,1,1 )
-plot( f_p, mag2db(ff_p) );
-xlabel("Frequency (Hz)")
-ylabel("dB" )
-title("Periodogram" )
-ylim([ -10+min( mag2db( ff_p )), 10+max( mag2db( ff_p ))]);
 
-subplot( 3,1,2 )
-plot( f_wb, mag2db(ff_wb) );
-xlabel("Frequency (Hz)")
-ylabel("dB" )
-title("Welch-Bartlett Rectangle Window" )
-ylim([ -10+min( mag2db( ff_wb )), 10+max( mag2db( ff_wb ))]);
 
-subplot( 3,1,3 )
-plot( f_c, mag2db(ff_c) );
-xlabel("Frequency (Hz)")
-ylabel("dB" )
-title("Capon Window" )
-ylim([ -10+min( mag2db( ff_c )), 10+max( mag2db( ff_c ))]);
+
+

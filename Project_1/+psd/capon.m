@@ -12,12 +12,12 @@ function [ff, f] = capon( data, fs, window_size, do_plot )
     ff = zeros(NFFT,1);
     f = [-fs/2:fs/NFFT:fs/2-(fs/NFFT)];
 
-    w_range = [-pi:2*pi/NFFT:pi - (2*pi/NFFT)];
+    w_range = fftshift([0:2*pi/NFFT:2*pi - (2*pi/NFFT)]);
     for wIdx = 1:length( w_range )
-        v = exp( -j*w_range(wIdx)*[0:NFFT-1]).';
+        v = exp( j*w_range(wIdx)*[0:NFFT-1]).';
         ff( wIdx ) = NFFT/(v'*inv(Rx)*v);
     end
-    ff = fftshift( abs(ff) );
+    ff = (abs(ff));
 
     if( do_plot )
         figure()
