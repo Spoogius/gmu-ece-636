@@ -17,7 +17,7 @@ function [ff, f] = capon( data, fs, window_size, do_plot )
         v = exp( j*w_range(wIdx)*[0:NFFT-1]).';
         ff( wIdx ) = NFFT/(v'*inv(Rx)*v);
     end
-    ff = (abs(ff));
+    ff = fftshift(abs(ff));
 
     if( do_plot )
         figure()

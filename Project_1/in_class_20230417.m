@@ -4,7 +4,7 @@ clear; clc;
 fs = 1000;
 
 % Segment period cant be multiple of period of complex sinusoids
-N = 52;
+N = 39;
 
 t0 = ( 0:1/fs:2000-1/fs);
 t1 = ( 2000:1/fs:4000-1/fs);
@@ -14,12 +14,12 @@ sig = exp( j.*2.*pi.*t0.*300).';
 sig = [sig; exp( j.*2.*pi.*t1.*360 + (pi/5)).'];
 sig = sig + gen.cwgn( 0, 0.5, size(sig,1), 1 );
 
-Rx = helpers.autocorrelation( sig, N);
-
+Rx = helpers.autocorrelation_matrix( sig, N);
+%%
 [ eVec, eVal ] = eig( Rx );
 eVals = diag( eVal );
 [ eVals, eIndex ] = sort( eVals );
-
+eVec = eVec( :, eIndex);
 numSignals = 2;
 
 w = (0:2*pi/N:2*pi-(2*pi/N) );

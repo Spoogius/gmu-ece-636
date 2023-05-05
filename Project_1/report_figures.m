@@ -173,7 +173,19 @@ duration = 2000; % Seconds
 x =  gen.cwgn( 0, 1, fs*duration, 1);
 psd.capon(x, fs, 100, true );
 ylim([ -10,10]);
+%% Figure 13
+fs = 100; % Hz
+duration = 1000; % Seconds
+[x,t] = gen.cplx_exp( [ 5, 10, -25 ], [0,0,0], [1,1,1], fs, duration);
+x =  x + gen.cwgn( 0, 10, fs*duration, 1);
+[ ff, f ] = psd.music(x, fs, 57, 3, true );
 
+%% Figure 13
+fs = 100; % Hz
+duration = 1000; % Seconds
+[x,t] = gen.cplx_exp( [ 5, 10, -25 ], [0,0,0], [1,1,1], fs, duration);
+x =  x + gen.cwgn( 0, 10, fs*duration, 1);
+[ ff, f ] = psd.music(x, fs, 57, 2, true );
 
 
 
