@@ -187,6 +187,180 @@ duration = 1000; % Seconds
 x =  x + gen.cwgn( 0, 10, fs*duration, 1);
 [ ff, f ] = psd.music(x, fs, 57, 2, true );
 
+%% Figure 14
+load data/guitar_E.mat
+load data/guitar_d.mat
+load data/guitar_b.mat
 
+figure(); hold on;
+xlabel("Frequency (Hz)");
+title('Unitless Periodogram' );
+[ff, f ] = psd.periodogram( guitar_E, fs, @windows.ones, false );
+magFF = mag2db( ff );
+magFF_norm = magFF + abs(min(magFF));
+magFF_norm = magFF_norm./max(magFF_norm);
+plot( f, magFF_norm );
 
+[ff, f ] = psd.periodogram( guitar_d, fs, @windows.ones, false );
+magFF = mag2db( ff );
+magFF_norm = magFF + abs(min(magFF));
+magFF_norm = magFF_norm./max(magFF_norm);
+plot( f, 1+magFF_norm );
+
+[ff, f ] = psd.periodogram( guitar_b, fs, @windows.ones, false );
+magFF = mag2db( ff );
+magFF_norm = magFF + abs(min(magFF));
+magFF_norm = magFF_norm./max(magFF_norm);
+plot( f, 2+magFF_norm );
+
+legend(["E", "d", "b" ] );
+
+%% Figure 15
+load data/guitar_E.mat
+load data/guitar_d.mat
+load data/guitar_b.mat
+
+figure(); hold on;
+xlabel("Frequency (Hz)");
+title('Unitless Welch-Bartlett' );
+[ff, f ] = psd.welch_bartlett( guitar_E, fs, @hanning, 2^14, 2^13, false );
+magFF = mag2db( ff );
+magFF_norm = magFF + abs(min(magFF));
+magFF_norm = magFF_norm./max(magFF_norm);
+plot( f, magFF_norm );
+
+[ff, f ] = psd.welch_bartlett( guitar_d, fs, @hanning, 2^14, 2^13, false );
+magFF = mag2db( ff );
+magFF_norm = magFF + abs(min(magFF));
+magFF_norm = magFF_norm./max(magFF_norm);
+plot( f, 1+magFF_norm );
+
+[ff, f ] = psd.welch_bartlett( guitar_b, fs, @hanning, 2^14, 2^13, false );
+magFF = mag2db( ff );
+magFF_norm = magFF + abs(min(magFF));
+magFF_norm = magFF_norm./max(magFF_norm);
+plot( f, 2+magFF_norm );
+
+legend(["E", "d", "b" ] );
+
+%% Figure 16
+load data/guitar_E.mat
+load data/guitar_d.mat
+load data/guitar_b.mat
+
+figure(); hold on;
+xlabel("Frequency (Hz)");
+title('Unitless Welch-Bartlett' );
+[ff, f ] = psd.welch_bartlett( guitar_E, fs, @hanning, 2^14, 2^13, false );
+magFF = mag2db( ff );
+magFF_norm = magFF + abs(min(magFF));
+magFF_norm = magFF_norm./max(magFF_norm);
+plot( f, magFF_norm );
+
+[ff, f ] = psd.welch_bartlett( guitar_d, fs, @hanning, 2^14, 2^13, false );
+magFF = mag2db( ff );
+magFF_norm = magFF + abs(min(magFF));
+magFF_norm = magFF_norm./max(magFF_norm);
+plot( f, 1+magFF_norm );
+
+[ff, f ] = psd.welch_bartlett( guitar_b, fs, @hanning, 2^14, 2^13, false );
+magFF = mag2db( ff );
+magFF_norm = magFF + abs(min(magFF));
+magFF_norm = magFF_norm./max(magFF_norm);
+plot( f, 2+magFF_norm );
+
+legend(["E", "d", "b" ] );
+xlim([0,1000]);
+
+%% Figure 18
+load data/guitar_E.mat
+load data/guitar_d.mat
+load data/guitar_b.mat
+
+guitar_E = guitar_E(1:100E3);
+guitar_d = guitar_d(1:100E3);
+guitar_b = guitar_b(1:100E3);
+
+figure(); hold on;
+xlabel("Frequency (Hz)");
+title('Unitless Blackman-Tukey' );
+[ff, f ] = psd.blackman_tukey( guitar_E, fs, @hanning, false );
+magFF = mag2db( ff );
+magFF_norm = magFF + abs(min(magFF));
+magFF_norm = magFF_norm./max(magFF_norm);
+plot( f, magFF_norm );
+
+[ff, f ] = psd.blackman_tukey( guitar_d, fs, @hanning, false );
+magFF = mag2db( ff );
+magFF_norm = magFF + abs(min(magFF));
+magFF_norm = magFF_norm./max(magFF_norm);
+plot( f, 1+magFF_norm );
+
+[ff, f ] = psd.blackman_tukey( guitar_b, fs, @hanning, false );
+magFF = mag2db( ff );
+magFF_norm = magFF + abs(min(magFF));
+magFF_norm = magFF_norm./max(magFF_norm);
+plot( f, 2+magFF_norm );
+
+legend(["E", "d", "b" ] );
+xlim([0,1000])
+
+%% Figure 19
+load data/guitar_E.mat
+load data/guitar_d.mat
+load data/guitar_b.mat
+
+figure(); hold on;
+xlabel("Frequency (Hz)");
+title('Unitless Capon' );
+[ff, f ] = psd.capon( guitar_E, fs, 700, false );
+magFF = mag2db( ff );
+magFF_norm = magFF + abs(min(magFF));
+magFF_norm = magFF_norm./max(magFF_norm);
+plot( f, magFF_norm );
+
+[ff, f ] = psd.capon( guitar_d, fs, 700, false );
+magFF = mag2db( ff );
+magFF_norm = magFF + abs(min(magFF));
+magFF_norm = magFF_norm./max(magFF_norm);
+plot( f, 1+magFF_norm );
+
+[ff, f ] = psd.capon( guitar_b, fs, 700, false );
+magFF = mag2db( ff );
+magFF_norm = magFF + abs(min(magFF));
+magFF_norm = magFF_norm./max(magFF_norm);
+plot( f, 2+magFF_norm );
+
+legend(["E", "d", "b" ] );
+%xlim([0,1000])
+
+%% Figure 20
+load data/guitar_b.mat
+
+guitar_filt_b0 = bandpass( guitar_b, [-10,10]+246, fs );
+guitar_filt_b1 = bandpass( guitar_b, [-10,10]+1719, fs );
+guitar_filt_b2 = bandpass( guitar_b, [-10,10]+2956, fs );
+
+guitar_filt = guitar_filt_b0 + guitar_filt_b1 + guitar_filt_b2;
+[ff, f ] = psd.welch_bartlett( guitar_filt, fs, @hanning, 2^14, 2^13, false );
+figure()
+plot( f, mag2db(ff) );
+xlabel("Frequency (Hz)");
+title('Welch-Bartlett of filtered b string' );
+%% Figure 21
+load data/guitar_b.mat
+
+guitar_filt_b0 = bandpass( guitar_b, [-10,10]+246, fs );
+guitar_filt_b1 = bandpass( guitar_b, [-10,10]+1719, fs );
+guitar_filt_b2 = bandpass( guitar_b, [-10,10]+2956, fs );
+
+guitar_filt = guitar_filt_b0 + guitar_filt_b1 + guitar_filt_b2;
+[ff, f ] = psd.music( guitar_b, fs, 700, 10, true );
+figure() 
+magFF = mag2db( ff );
+magFF_norm = magFF + abs(min(magFF));
+magFF_norm = magFF_norm./max(magFF_norm);
+plot( f, 2+magFF_norm );
+
+%xlim([0,1000])
 
